@@ -7,26 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".presentation.MainActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <LinearLayout
-            android:id="@+id/linear_layout_shop_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#DAC6F3"
-            android:orientation="vertical">
-
-        </LinearLayout>
-    </ScrollView>
-
     <androidx.recyclerview.widget.RecyclerView
-        android:visibility="invisible"
         android:id="@+id/recyclerViewItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
