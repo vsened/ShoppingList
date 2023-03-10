@@ -1,21 +1,13 @@
 package com.example.shopinglist.presentation
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.example.shopinglist.R
 import com.example.shopinglist.domain.ShopItem
 
-class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopListViewHolder>() {
-    var items = listOf<ShopItem>()
-        set(value) {
-            val callback = ShopListDiffCallback(items, value)
-            val diffResult = DiffUtil.calculateDiff(callback).dispatchUpdatesTo(this)
-            field = value
-        }
+class ShopListAdapter : ListAdapter<ShopItem, ShopListViewHolder>(ShopItemDiffCallback()) {
+
     var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
     var onShopItemClickListener: ((ShopItem) -> Unit)? = null
 
@@ -30,7 +22,7 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopListViewHolder>
     }
 
     override fun onBindViewHolder(holder: ShopListViewHolder, position: Int) {
-        val item = items[position]
+        val item = getItem(position)
         holder.tvName.text = item.name
         holder.tvCount.text = item.count.toString()
         holder.view.setOnLongClickListener {
@@ -46,12 +38,8 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopListViewHolder>
         }
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
-
     override fun getItemViewType(position: Int): Int {
-        val item = items[position]
+        val item = getItem(position)
         return if (item.enabled) {
             VIEW_TYPE_ENABLED
         } else {
@@ -64,10 +52,5 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopListViewHolder>
         const val VIEW_TYPE_DISABLED = 0
 
         const val MAX_POOL_SIZE = 10
-    }
-
-    class ShopListViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val tvName: TextView = view.findViewById(R.id.textViewItemName)
-        val tvCount: TextView = view.findViewById(R.id.textViewItemCount)
     }
 }
