@@ -1,12 +1,13 @@
 package com.example.shopinglist.presentation
 
 import android.os.Bundle
-import android.util.Log
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shopinglist.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
@@ -18,6 +19,11 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.shopListLiveData.observe(this) {
             shopListAdapter.submitList(it)
+        }
+        val buttonAddItem = findViewById<FloatingActionButton>(R.id.buttonAddItem)
+        buttonAddItem.setOnClickListener {
+            val intent = ShopItemActivity.newIntentAddItem(this)
+            startActivity(intent)
         }
     }
 
@@ -36,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 ShopListAdapter.MAX_POOL_SIZE
             )
         }
-        setupLingClickListener()
+        setupLongClickListener()
         setupClickListener()
         setupSwipedListener(recyclerViewItem)
     }
@@ -65,11 +71,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupClickListener() {
         shopListAdapter.onShopItemClickListener = {
-            Log.i("MainActivity", it.name)
+            val intent = ShopItemActivity.newIntentEditItem(this, it.id)
+            startActivity(intent)
         }
     }
 
-    private fun setupLingClickListener() {
+    private fun setupLongClickListener() {
         shopListAdapter.onShopItemLongClickListener = {
             viewModel.changeEnableState(it)
         }
