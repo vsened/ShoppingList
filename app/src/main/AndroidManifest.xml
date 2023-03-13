@@ -20,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.ShopItemActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
