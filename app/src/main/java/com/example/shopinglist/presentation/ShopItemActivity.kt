@@ -15,7 +15,7 @@ import com.example.shopinglist.domain.ShopItem
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class ShopItemActivity : AppCompatActivity() {
+class ShopItemActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListener {
     private lateinit var fragmentCV: FragmentContainerView
     private var screenMode = MODE_UNKNOWN
     private var shopItemId = ShopItem.UNDEFINED_ID
@@ -24,7 +24,13 @@ class ShopItemActivity : AppCompatActivity() {
         setContentView(R.layout.activity_shop_item)
         parseIntent()
         fragmentCV = findViewById(R.id.shop_item_container)
-        launchScreenMode()
+        if (savedInstanceState == null) {
+            launchScreenMode()
+        }
+    }
+
+    override fun onEditingFinish() {
+        finish()
     }
 
     private fun launchScreenMode() {
@@ -34,7 +40,7 @@ class ShopItemActivity : AppCompatActivity() {
             else -> throw RuntimeException("Unknown screen mode $screenMode")
         }
         supportFragmentManager.beginTransaction()
-            .add(R.id.shop_item_container, fragment)
+            .replace(R.id.shop_item_container, fragment)
             .commit()
     }
     private fun parseIntent() {
