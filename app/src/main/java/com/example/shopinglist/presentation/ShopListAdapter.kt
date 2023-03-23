@@ -2,8 +2,12 @@ package com.example.shopinglist.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
 import com.example.shopinglist.R
+import com.example.shopinglist.databinding.ShopItemDisabledBinding
+import com.example.shopinglist.databinding.ShopItemEnabledBinding
 import com.example.shopinglist.domain.ShopItem
 
 class ShopListAdapter : ListAdapter<ShopItem, ShopListViewHolder>(ShopItemDiffCallback()) {
@@ -17,23 +21,35 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopListViewHolder>(ShopItemDiffCa
             VIEW_TYPE_DISABLED -> R.layout.shop_item_disabled
             else -> throw RuntimeException("Unknown view type: $viewType")
         }
-        val view = LayoutInflater.from(parent.context).inflate(layerId, parent, false)
-        return ShopListViewHolder(view)
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(parent.context),
+            layerId,
+            parent,
+            false
+        )
+        return ShopListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ShopListViewHolder, position: Int) {
         val item = getItem(position)
-        holder.tvName.text = item.name
-        holder.tvCount.text = item.count.toString()
-        holder.view.setOnLongClickListener {
+        val binding = holder.binding
+        binding.root.setOnLongClickListener {
             if (onShopItemLongClickListener != null) {
                 onShopItemLongClickListener?.invoke(item)
             }
             true
         }
-        holder.view.setOnClickListener{
+        binding.root.setOnClickListener{
             if (onShopItemClickListener != null) {
                 onShopItemClickListener?.invoke(item)
+            }
+        }
+        when (binding) {
+            is ShopItemDisabledBinding -> {
+                binding.shopItem = item
+            }
+            is ShopItemEnabledBinding -> {
+                binding.shopItem = item
             }
         }
     }
