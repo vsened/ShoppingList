@@ -1,25 +1,25 @@
 package com.example.shopinglist.presentation
 
 import androidx.databinding.BindingAdapter
+import com.example.shopinglist.R
 import com.google.android.material.textfield.TextInputLayout
 
 @BindingAdapter("errorInputName")
 fun bindErrorInputName(textInputLayout: TextInputLayout, isError: Boolean) {
-    if (isError) {
-        textInputLayout.error = INCORRECT_NAME_MESSAGE
+    val message = if (isError) {
+        textInputLayout.context.getString(R.string.error_input_name)
     } else {
-        textInputLayout.error = null
+        null
     }
+    textInputLayout.error = message
 }
 
 @BindingAdapter("errorInputCount")
 fun bindErrorInputCount(textInputLayout: TextInputLayout, isError: Boolean) {
-    if (isError) {
-        textInputLayout.error = INCORRECT_COUNT_MESSAGE
+    val message = if (isError) {
+        textInputLayout.context.getString(R.string.error_input_count)
     } else {
-        textInputLayout.error = null
+        null
     }
+    textInputLayout.error = message
 }
-
-private const val INCORRECT_NAME_MESSAGE = "Name is incorrect! Please change."
-private const val INCORRECT_COUNT_MESSAGE = "Count is incorrect! Please change."

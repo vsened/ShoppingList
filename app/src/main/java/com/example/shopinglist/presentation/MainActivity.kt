@@ -16,19 +16,19 @@ import com.example.shopinglist.databinding.ShopItemEnabledBinding
 import com.example.shopinglist.domain.ShopItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListener {
+class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
+
     private lateinit var viewModel: MainViewModel
     private lateinit var shopListAdapter: ShopListAdapter
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupRecyclerView()
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        viewModel.shopListLiveData.observe(this) {
+        viewModel.shopList.observe(this) {
             shopListAdapter.submitList(it)
         }
         binding.buttonAddItem.setOnClickListener {
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListen
         }
     }
 
-    override fun onEditingFinish() {
+    override fun onEditingFinished() {
         Toast.makeText(this@MainActivity, "Success", Toast.LENGTH_SHORT).show()
         supportFragmentManager.popBackStack()
     }
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListen
     private fun launchFragment(fragment: Fragment) {
         supportFragmentManager.popBackStack()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container_item, fragment)
+            .replace(R.id.shop_item_container, fragment)
             .addToBackStack(null)
             .commit()
     }
@@ -73,14 +73,15 @@ class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListen
         }
         setupLongClickListener()
         setupClickListener()
-        setupSwipedListener(binding.recyclerViewItems)
+        setupSwipeListener(binding.recyclerViewItems)
     }
 
-    private fun setupSwipedListener(recyclerViewItem: RecyclerView) {
+    private fun setupSwipeListener(rvShopList: RecyclerView) {
         val callback = object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         ) {
+
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListen
             }
         }
         val itemTouchHelper = ItemTouchHelper(callback)
-        itemTouchHelper.attachToRecyclerView(recyclerViewItem)
+        itemTouchHelper.attachToRecyclerView(rvShopList)
     }
 
     private fun setupClickListener() {

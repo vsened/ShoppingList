@@ -6,4 +6,6 @@
     <string name="name_item_label">Name:</string>
     <string name="count_item_label">Count:</string>
     <string name="save_button_label">Save</string>
+    <string name="error_input_name">Invalid name</string>
+    <string name="error_input_count">Invalid count</string>
 </resources>
