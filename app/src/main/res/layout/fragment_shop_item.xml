@@ -31,7 +31,7 @@
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.currentShopItem.name}"
+                android:text="@{viewModel.shopItem.name}"
                 android:hint="@string/name_item_label"
                 android:inputType="textCapWords"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/count_item_label"
-                android:text="@{String.valueOf(viewModel.currentShopItem.count)}"
+                android:text="@{String.valueOf(viewModel.shopItem.count)}"
                 android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
