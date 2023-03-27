@@ -44,6 +44,7 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
 
     }
 
+
     fun addShopItem(inputName: String?, inputCount: String?) {
         viewModelScope.launch {
             val name = parseName(inputName)
