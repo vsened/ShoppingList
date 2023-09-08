@@ -2,6 +2,7 @@
 Учебный проект
 
 Стек: Kotlin | Kotlin Coroutines | Room | View Binding | Fragments
+
 Arch: MVVM | Clean Architecture
 
 <img src="https://github.com/vsened/ShopingList/assets/62769202/f10ec18e-1718-4da5-9a15-669317b9d1ef" width="200">
