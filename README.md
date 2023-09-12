@@ -1,4 +1,4 @@
-# ShopingList
+# ShoppingList
 Учебный проект
 
 Стек: Kotlin | Kotlin Coroutines | Room | View Binding | Fragments
