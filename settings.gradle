@@ -14,3 +14,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "ShopingList"
 include ':app'
+include ':domain'
+include ':core:data'
+include ':core:ui'
+include ':feature:shop-list'
+include ':feature:shop-item'
